@@ -33,14 +33,16 @@ export class UsersController {
 
   @Patch(':id')
   @ApiOperation({summary: 'Atulizar usuário.'})
-  @ApiResponse({status: 200, description: 'Usuário atualizado com sucesso.!'})
+  @ApiResponse({status: 200, description: 'Usuário atualizado com sucesso!'})
   update(@Param('id') id: string,@Body() updateUserDto: UpdateUserDto):User {
     
     return this.usersService.update(+id, updateUserDto);;
   }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.usersService.remove(+id);
-  // }
+  @Delete(':id')
+  @ApiOperation({summary: 'Exclui  um usuário.'})
+  @ApiResponse({status:200, description: 'Usuário excluido com sucesso!'})
+  remove(@Param('id') id: string) {
+    return this.usersService.remove(+id);
+  }
 }
