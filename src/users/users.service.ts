@@ -1,27 +1,28 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { DeleteUserDto } from './dto/delete-user.dto';
 
 export interface User {
   id: number;
   name: string;
   email: string;
+  password: string;
 }
 
 @Injectable()
 export class UsersService {
 
   private users: User[] = [
-    { id: 1, name: 'João', email: 'joao@email.com' },
-    { id: 2, name: 'Maria', email: 'maria@email.com' },
+    { id: 1, name: 'João', email: 'joao@email.com', password: '123456' },
+    { id: 2, name: 'Maria', email: 'maria@email.com', password: '4321' },
   ];
 
   create(createUserDto: CreateUserDto): User {
     const newUser: User = {
       id: this.users.length + 1,
       name: createUserDto.name,
-      email: createUserDto.email
+      email: createUserDto.email,
+      password: createUserDto.password
     };
 
     this.users.push(newUser);
