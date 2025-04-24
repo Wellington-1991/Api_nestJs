@@ -10,9 +10,10 @@ import { AuthGuard } from '@nestjs/passport';
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @UseGuards(AuthGuard('jwt'))
+
   @Post()
   @ApiOperation({ summary: 'Criar um novo usuário' }) // Descrição do que a rota faz
   @ApiResponse({ status: 201, description: 'Usuário criado com sucesso.' })
@@ -28,23 +29,23 @@ export class UsersController {
   }
 
   @Get(':id')
-  @ApiOperation({summary: 'Listar usuário por id'})
-  @ApiResponse({status: 200, description: 'Usuário existe.'})
+  @ApiOperation({ summary: 'Listar usuário por id' })
+  @ApiResponse({ status: 200, description: 'Usuário existe.' })
   findOne(@Param('id') id: string): User {
     return this.usersService.findOne(Number(id));
   }
 
   @Patch(':id')
-  @ApiOperation({summary: 'Atulizar usuário.'})
-  @ApiResponse({status: 200, description: 'Usuário atualizado com sucesso!'})
-  update(@Param('id') id: string,@Body() updateUserDto: UpdateUserDto):User {
-    
+  @ApiOperation({ summary: 'Atulizar usuário.' })
+  @ApiResponse({ status: 200, description: 'Usuário atualizado com sucesso!' })
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): User {
+
     return this.usersService.update(+id, updateUserDto);;
   }
 
   @Delete(':id')
-  @ApiOperation({summary: 'Exclui  um usuário.'})
-  @ApiResponse({status:200, description: 'Usuário excluido com sucesso!'})
+  @ApiOperation({ summary: 'Exclui  um usuário.' })
+  @ApiResponse({ status: 200, description: 'Usuário excluido com sucesso!' })
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
