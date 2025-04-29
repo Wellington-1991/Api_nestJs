@@ -12,41 +12,53 @@ import { AuthGuard } from '@nestjs/passport';
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
-  @UseGuards(AuthGuard('jwt'))
-
-  @Post()
-  @ApiOperation({ summary: 'Criar um novo usuário' }) // Descrição do que a rota faz
-  @ApiResponse({ status: 201, description: 'Usuário criado com sucesso.' })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    const user = await this.usersService.findOne(Number(id));
+    return user;
   }
 
   @Get()
-  @ApiOperation({ summary: 'Listar todos os usuários' })
-  @ApiResponse({ status: 200, description: 'Lista de usuários.', type: [User] })
-  findAll(): User[] {
-    return this.usersService.findAll();
+  async findAll() {
+    const users = await this.usersService.findAll();
+    return users;
   }
+  
+  // @Post()
+  // @ApiOperation({ summary: 'Criar um novo usuário' }) // Descrição do que a rota faz
+  // @ApiResponse({ status: 201, description: 'Usuário criado com sucesso.' })
+  // create(@Body() createUserDto: CreateUserDto) {
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Listar usuário por id' })
-  @ApiResponse({ status: 200, description: 'Usuário existe.' })
-  findOne(@Param('id') id: string): User {
-    return this.usersService.findOne(Number(id));
-  }
+  //   console.log("Bora criar usuários?");
+  //   return this.usersService.create(createUserDto);
+  // }
 
-  @Patch(':id')
-  @ApiOperation({ summary: 'Atulizar usuário.' })
-  @ApiResponse({ status: 200, description: 'Usuário atualizado com sucesso!' })
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): User {
+  // @Get()
+  // @ApiOperation({ summary: 'Listar todos os usuários' })
+  // @ApiResponse({ status: 200, description: 'Lista de usuários.', type: [User] })
+  // findAll(): User[] {
+  //   return this.usersService.findAll();
+  // }
 
-    return this.usersService.update(+id, updateUserDto);;
-  }
+  // @Get(':id')
+  // @ApiOperation({ summary: 'Listar usuário por id' })
+  // @ApiResponse({ status: 200, description: 'Usuário existe.' })
+  // findOne(@Param('id') id: string): User {
+  //   return this.usersService.findOne(Number(id));
+  // }
 
-  @Delete(':id')
-  @ApiOperation({ summary: 'Exclui  um usuário.' })
-  @ApiResponse({ status: 200, description: 'Usuário excluido com sucesso!' })
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
-  }
+  // @Patch(':id')
+  // @ApiOperation({ summary: 'Atulizar usuário.' })
+  // @ApiResponse({ status: 200, description: 'Usuário atualizado com sucesso!' })
+  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): User {
+
+  //   return this.usersService.update(+id, updateUserDto);;
+  // }
+
+  // @Delete(':id')
+  // @ApiOperation({ summary: 'Exclui  um usuário.' })
+  // @ApiResponse({ status: 200, description: 'Usuário excluido com sucesso!' })
+  // remove(@Param('id') id: string) {
+  //   return this.usersService.remove(+id);
+  // }
 }
